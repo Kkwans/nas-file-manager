@@ -1,0 +1,17 @@
+services:
+  nas-file-manager:
+    image: node:20-alpine
+    container_name: nas-file-manager
+    restart: unless-stopped
+    working_dir: /app
+    command: sh -c "npm install && npm run build && npm start"
+    volumes:
+      - /volume1:/data:ro
+    ports:
+      - "8888:3000"
+    environment:
+      - NEXT_PUBLIC_ROOT_PATH=/volume1
+      - NEXT_PUBLIC_PORT=3000
+    labels:
+      com.ugreen.docker.description: NAS文件管理器
+      com.ugreen.docker.displayname: NAS文件管理器
