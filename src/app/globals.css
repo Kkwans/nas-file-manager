@@ -1,0 +1,390 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --card: #ffffff;
+  --card-foreground: #171717;
+  --primary: #2563eb;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #0f172a;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #f1f5f9;
+  --accent-foreground: #0f172a;
+  --border: #e2e8f0;
+  --ring: #2563eb;
+  --radius: 0.5rem;
+  --sidebar-width: 260px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --card: #1a1a1a;
+  --card-foreground: #ededed;
+  --primary: #3b82f6;
+  --primary-foreground: #ffffff;
+  --secondary: #262626;
+  --secondary-foreground: #ededed;
+  --muted: #262626;
+  --muted-foreground: #a1a1aa;
+  --accent: #262626;
+  --accent-foreground: #ededed;
+  --border: #27272a;
+  --ring: #3b82f6;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(128, 128, 128, 0.3);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(128, 128, 128, 0.5);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(200, 200, 200, 0.2);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(200, 200, 200, 0.35);
+}
+
+/* Markdown 渲染样式 */
+.markdown-body {
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+.markdown-body h1 { font-size: 2em; font-weight: 700; margin: 1em 0 0.5em; border-bottom: 1px solid var(--border); padding-bottom: 0.3em; }
+.markdown-body h2 { font-size: 1.5em; font-weight: 600; margin: 0.8em 0 0.4em; }
+.markdown-body h3 { font-size: 1.25em; font-weight: 600; margin: 0.6em 0 0.3em; }
+.markdown-body h4 { font-size: 1.1em; font-weight: 600; margin: 0.5em 0 0.25em; }
+
+.markdown-body p { margin: 0.5em 0; }
+.markdown-body ul, .markdown-body ol { padding-left: 2em; margin: 0.5em 0; }
+.markdown-body li { margin: 0.25em 0; }
+
+.markdown-body code {
+  background: var(--muted);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+  font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+}
+
+.markdown-body pre {
+  background: var(--muted);
+  border-radius: 8px;
+  padding: 1em;
+  overflow-x: auto;
+  margin: 0.8em 0;
+}
+
+.markdown-body pre code {
+  background: none;
+  padding: 0;
+  font-size: 0.85em;
+  line-height: 1.5;
+}
+
+.markdown-body blockquote {
+  border-left: 4px solid var(--primary);
+  padding: 0.5em 1em;
+  margin: 0.8em 0;
+  background: var(--muted);
+  border-radius: 0 8px 8px 0;
+}
+
+.markdown-body table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0.8em 0;
+}
+
+.markdown-body th, .markdown-body td {
+  border: 1px solid var(--border);
+  padding: 0.5em 0.8em;
+  text-align: left;
+}
+
+.markdown-body th {
+  background: var(--muted);
+  font-weight: 600;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.markdown-body a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.markdown-body a:hover {
+  text-decoration: underline;
+}
+
+.markdown-body hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1.5em 0;
+}
+
+/* 代码高亮主题 - 通过 highlight.js 自动处理 */
+/* rehype-highlight 为 markdown 中的代码块添加高亮 */
+/* CodePreview 组件使用 highlight.js 直接高亮 */
+
+/* 确保 highlight.js 代码块在 markdown 中样式统一 */
+.markdown-body pre code.hljs {
+  background: transparent;
+  padding: 0;
+  font-size: 0.85em;
+  line-height: 1.5;
+}
+
+/* ===== 移动端适配 ===== */
+
+/* 底部 ActionSheet */
+.actionsheet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  animation: fadeIn 0.15s ease-out;
+}
+
+.actionsheet {
+  width: 100%;
+  max-width: 480px;
+  max-height: 70vh;
+  overflow-y: auto;
+  background: var(--card);
+  border-radius: var(--radius) var(--radius) 0 0;
+  padding-bottom: var(--safe-bottom);
+  animation: slideUp 0.2s ease-out;
+}
+
+.actionsheet-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1.25rem;
+  font-size: 0.9375rem;
+  transition: background 0.15s;
+  border: none;
+  background: transparent;
+  color: var(--foreground);
+  text-align: left;
+  cursor: pointer;
+}
+
+.actionsheet-item:active {
+  background: var(--accent);
+}
+
+.actionsheet-item.danger {
+  color: #ef4444;
+}
+
+.actionsheet-cancel {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  background: transparent;
+  border: none;
+  border-top: 6px solid var(--muted);
+  cursor: pointer;
+}
+
+.actionsheet-cancel:active {
+  background: var(--accent);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+/* 移动端触摸优化 */
+@media (hover: none) and (pointer: coarse) {
+  /* 触摸设备上始终显示操作按钮 */
+  .touch-show-actions .file-action-btn {
+    opacity: 0.6 !important;
+  }
+
+  /* 增大触摸目标 */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* 移动端 Markdown 缩小字体 */
+@media (max-width: 640px) {
+  .markdown-body {
+    font-size: 14px;
+  }
+
+  .markdown-body h1 { font-size: 1.6em; }
+  .markdown-body h2 { font-size: 1.3em; }
+  .markdown-body h3 { font-size: 1.1em; }
+
+  .markdown-body pre {
+    padding: 0.75em;
+    font-size: 0.8em;
+  }
+
+  .markdown-body table {
+    font-size: 0.85em;
+  }
+
+  .markdown-body th, .markdown-body td {
+    padding: 0.35em 0.5em;
+  }
+}
+
+/* ===== 主题切换过渡 ===== */
+html.theme-transitioning,
+html.theme-transitioning *,
+html.theme-transitioning *::before,
+html.theme-transitioning *::after {
+  transition: background-color 0.2s ease, color 0.15s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+/* ===== 暗色主题全局增强 ===== */
+.dark {
+  color-scheme: dark;
+}
+
+:root {
+  color-scheme: light;
+}
+
+/* 暗色模式下图片/视频略微降低亮度以减少刺眼感 */
+.dark img,
+.dark video {
+  brightness: 0.95;
+}
+
+/* highlight.js 暗色主题适配 */
+.dark .hljs {
+  background: transparent;
+}
+
+/* highlight.js 亮色主题适配 */
+:root .hljs {
+  background: transparent;
+}
+
+/* highlight.js 暗色主题覆盖 - GitHub Dark 风格 */
+.dark .hljs-keyword { color: #ff7b72; }
+.dark .hljs-string { color: #a5d6ff; }
+.dark .hljs-number { color: #79c0ff; }
+.dark .hljs-comment { color: #8b949e; }
+.dark .hljs-function { color: #d2a8ff; }
+.dark .hljs-variable { color: #ffa657; }
+.dark .hljs-attr { color: #79c0ff; }
+.dark .hljs-built_in { color: #ffa657; }
+.dark .hljs-type { color: #ff7b72; }
+.dark .hljs-literal { color: #79c0ff; }
+.dark .hljs-params { color: #c9d1d9; }
+.dark .hljs-meta { color: #8b949e; }
+.dark .hljs-title { color: #d2a8ff; }
+.dark .hljs-tag { color: #7ee787; }
+.dark .hljs-name { color: #7ee787; }
+.dark .hljs-attribute { color: #79c0ff; }
+
+/* highlight.js 亮色主题覆盖 - GitHub Light 风格 */
+:root .hljs-keyword { color: #cf222e; }
+:root .hljs-string { color: #0a3069; }
+:root .hljs-number { color: #0550ae; }
+:root .hljs-comment { color: #6e7781; }
+:root .hljs-function { color: #8250df; }
+:root .hljs-variable { color: #953800; }
+:root .hljs-attr { color: #0550ae; }
+:root .hljs-built_in { color: #953800; }
+:root .hljs-type { color: #cf222e; }
+:root .hljs-literal { color: #0550ae; }
+:root .hljs-params { color: #24292f; }
+:root .hljs-meta { color: #6e7781; }
+:root .hljs-title { color: #8250df; }
+:root .hljs-tag { color: #116329; }
+:root .hljs-name { color: #116329; }
+:root .hljs-attribute { color: #0550ae; }
+
+/* ===== 暗色模式 - PDF 预览 ===== */
+.dark iframe[title="PDF 预览"] {
+  background: #1a1a1a;
+  filter: invert(0.88) hue-rotate(180deg);
+}
+
+/* ===== 暗色模式 - 音频播放器适配 ===== */
+.dark audio {
+  filter: invert(0.85) hue-rotate(180deg);
+}
+
+/* ===== 暗色模式 - 视频控件适配 ===== */
+.dark video::-webkit-media-controls-panel {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+/* ===== 暗色模式 - 输入框焦点优化 ===== */
+.dark input:focus,
+.dark select:focus {
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+/* ===== 暗色模式 - 选中文本颜色 ===== */
+.dark ::selection {
+  background: rgba(59, 130, 246, 0.3);
+  color: #ededed;
+}
+
+:root ::selection {
+  background: rgba(37, 99, 235, 0.2);
+  color: #171717;
+}
